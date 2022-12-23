@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'lm'
+
+args = ARGV[0]
+
+if args.nil?
+  puts 'USAGE: lm <bitpattern>'
+  puts 'For example, to provide a bitpattern for an AND gate its 0001'
+  puts 'The number of bits are inferred'
+  puts "You can use x for don't care, like lm 0xx1"
+  exit 1
+end
+
+min = Lm::Minimizer.new(args)
+puts min.shortest.to_s(verilog: "a")
