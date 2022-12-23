@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 module Lm
+  class Degenerate
+    def initialize(val)
+      @val = val
+    end
+
+    def to_s(_=nil)
+      @val.to_s
+    end
+  end
+
   class Minimizer
     def initialize(output_str)
       @output_str = output_str
@@ -11,6 +21,9 @@ module Lm
     end
 
     def canonical
+      if degenerate?
+        return degenerate
+      end
       output_string.sop
     end
 
@@ -38,7 +51,23 @@ module Lm
       String122ResultSelector.new(implicants, reduced_sum)
     end
 
+    def variation
+      @variation ||= @output_str.split('').uniq
+    end
+
+    # degenerate case
+    def degenerate?
+      variation.length == 1
+    end
+
+    def degenerate
+      Degenerate.new(variation.first)
+    end
+
     def shortest
+      if degenerate?
+        return degenerate
+      end
       calculator.shortest
     end
 

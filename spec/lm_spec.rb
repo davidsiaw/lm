@@ -37,4 +37,24 @@ RSpec.describe Lm do
     min = Lm::Minimizer.new("1110")
     expect(min.canonical.to_s(verilog: "a")).to eq "~a[0] & ~a[1] | ~a[0] & a[1] | a[0] & ~a[1]"
   end
+
+  it "returns degenerate case 0" do
+    min = Lm::Minimizer.new("0")
+    expect(min.shortest.to_s(verilog: "a")).to eq "0"
+  end
+
+  it "returns degenerate case 00000" do
+    min = Lm::Minimizer.new("00000")
+    expect(min.shortest.to_s(verilog: "a")).to eq "0"
+  end
+
+  it "returns degenerate case 11" do
+    min = Lm::Minimizer.new("11")
+    expect(min.shortest.to_s(verilog: "a")).to eq "1"
+  end
+
+  it "returns degenerate case 1111111" do
+    min = Lm::Minimizer.new("1111111")
+    expect(min.shortest.to_s(verilog: "a")).to eq "1"
+  end
 end

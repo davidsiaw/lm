@@ -4,10 +4,14 @@ module Lm
   class OutputString
     def initialize(str)
       @str = str
+
+      if @str.length < 2
+        @str = @str.rjust(2, '0')
+      end
     end
 
     def bitcount
-      Math.log(@str.length, 2).ceil
+      [Math.log(@str.length, 2).ceil, 1].max
     end
 
     def sop
@@ -19,6 +23,7 @@ module Lm
         prod = Product.new(bitbreak)
         res << prod
       end
+
       res
     end
 

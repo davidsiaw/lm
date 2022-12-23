@@ -13,7 +13,7 @@ module Lm
     end
 
     def by_length
-      product_list.sort(&:length)
+      product_list.sort_by{|x| x.length}
     end
 
     def reduce
