@@ -9,11 +9,11 @@ module Lm
     end
 
     def multiply(other_sum)
-      raise 'Not a sum' unless other_sum.is_a? Sum
+      raise "Not a sum" unless other_sum.is_a? Sum
 
-      newarr = product_list.map{|x| x.to_a}.product(other_sum.product_list.map{|x| x.to_a})
+      newarr = product_list.map(&:to_a).product(other_sum.product_list.map(&:to_a))
 
-      newstr = newarr.map{|x| x.join('')}.join('+')
+      newstr = newarr.map { |x| x.join("") }.join("+")
       Sum.new(newstr)
     end
 
@@ -22,7 +22,7 @@ module Lm
     end
 
     def by_length
-      product_list.sort_by{|x| x.length}
+      product_list.sort_by(&:length)
     end
 
     def reduce

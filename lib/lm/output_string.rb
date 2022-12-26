@@ -5,9 +5,9 @@ module Lm
     def initialize(str)
       @str = str
 
-      if @str.length < 2
-        @str = @str.rjust(2, '0')
-      end
+      return unless @str.length < 2
+
+      @str = @str.rjust(2, "0")
     end
 
     def bitcount

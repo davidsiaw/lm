@@ -40,9 +40,10 @@ module Lm
       seenkeys = Set.new
 
       termhash.each do |key, value|
-        next if seenkeys.include? ("#{([key] + value.to_a).sort.join('|')}")
-        seenkeys << ([key] + value.to_a).sort.join('|')
-        newarray << "#{key}+#{value.map{|x| Sum.new(x)}.inject(:multiply)}"
+        next if seenkeys.include?(([key] + value.to_a).sort.join("|").to_s)
+
+        seenkeys << ([key] + value.to_a).sort.join("|")
+        newarray << "#{key}+#{value.map { |x| Sum.new(x) }.inject(:multiply)}"
       end
 
       POS.new(newarray.join(","))
@@ -65,7 +66,7 @@ module Lm
 
         newsum = newterms.join("+")
 
-        arr = [newsum] + arr[2..-1]
+        arr = [newsum] + arr[2..]
         # p arr
       end
 

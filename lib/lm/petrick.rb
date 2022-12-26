@@ -67,13 +67,13 @@ module Lm
     end
 
     def string122
-      factors.
-        map {|sums|
-          sums.map { |prducts| 
+      factors
+        .map do |sums|
+          sums.map do |prducts|
             prducts.map { |x| (x.ord + 48).chr }.join("")
-          }.join("+")
-        }.
-        join(",")
+          end.join("+")
+        end
+        .join(",")
     end
   end
 end

@@ -6,7 +6,7 @@ module Lm
       @val = val
     end
 
-    def to_s(_=nil)
+    def to_s(_ = nil)
       @val.to_s
     end
   end
@@ -21,9 +21,8 @@ module Lm
     end
 
     def canonical
-      if degenerate?
-        return degenerate
-      end
+      return degenerate if degenerate?
+
       output_string.sop
     end
 
@@ -48,6 +47,7 @@ module Lm
       loop do
         newsum = sum.reduce
         return newsum if sum.to_s.length == newsum.to_s.length
+
         sum = newsum
       end
       sum
@@ -58,7 +58,7 @@ module Lm
     end
 
     def variation
-      @variation ||= @output_str.split('').uniq
+      @variation ||= @output_str.split("").uniq
     end
 
     # degenerate case
@@ -71,9 +71,8 @@ module Lm
     end
 
     def shortest
-      if degenerate?
-        return degenerate
-      end
+      return degenerate if degenerate?
+
       calculator.shortest
     end
 
@@ -82,16 +81,14 @@ module Lm
     end
 
     def evaluate(input)
-      if degenerate?
-        return degenerate.to_s.to_i
-      end
+      return degenerate.to_s.to_i if degenerate?
+
       BinFunc.new(shortest).evaluate(input)
     end
 
     def canonical_evaluate(input)
-      if degenerate?
-        return degenerate.to_s.to_i
-      end
+      return degenerate.to_s.to_i if degenerate?
+
       BinFunc.new(output_string.sop).evaluate(input)
     end
   end
