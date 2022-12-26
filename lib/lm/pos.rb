@@ -21,7 +21,7 @@ module Lm
       @termhash ||= begin
         res = {}
         sum_array.each do |sum|
-          terms = sum.split("+")
+          terms = sum.split("+", 2)
           terms.each do |term|
             res[term] ||= Set.new
             terms.each do |x|
@@ -40,13 +40,9 @@ module Lm
       seenkeys = Set.new
 
       termhash.each do |key, value|
-        next if seenkeys.include? key
-
-        seenkeys << key
-        value.each do |factor|
-          seenkeys << factor
-        end
-        newarray << "#{key}+#{value.to_a.join("")}"
+        next if seenkeys.include? ("#{([key] + value.to_a).sort.join('|')}")
+        seenkeys << ([key] + value.to_a).sort.join('|')
+        newarray << "#{key}+#{value.map{|x| Sum.new(x)}.inject(:multiply)}"
       end
 
       POS.new(newarray.join(","))
@@ -69,7 +65,7 @@ module Lm
 
         newsum = newterms.join("+")
 
-        arr = [newsum] + arr[2..]
+        arr = [newsum] + arr[2..-1]
         # p arr
       end
 

@@ -44,7 +44,13 @@ module Lm
     end
 
     def reduced_sum
-      pos.expand.reduce
+      sum = pos.apply_factorize.expand
+      loop do
+        newsum = sum.reduce
+        return newsum if sum.to_s.length == newsum.to_s.length
+        sum = newsum
+      end
+      sum
     end
 
     def calculator
@@ -71,11 +77,21 @@ module Lm
       calculator.shortest
     end
 
+    def inputlen
+      output_string.bitcount
+    end
+
     def evaluate(input)
+      if degenerate?
+        return degenerate.to_s.to_i
+      end
       BinFunc.new(shortest).evaluate(input)
     end
 
     def canonical_evaluate(input)
+      if degenerate?
+        return degenerate.to_s.to_i
+      end
       BinFunc.new(output_string.sop).evaluate(input)
     end
   end
