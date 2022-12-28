@@ -30,14 +30,9 @@ If bundler is not being used to manage dependencies, install the gem by executin
 Usage example:
 
 ```ruby
-
-    min = Lm::Minimizer.new("1110")
-    min.shortest.to_s(verilog: "a") # => ~a[0] | ~a[1]
-    min.canonical.to_s(:verilog)    # => ~x[0] & ~x[1] | ~x[0] & x[1] | x[0] & ~x[1]
-  end
-
-  it "return canonical" do
-    min = Lm::Minimizer.new("1110")
+min = Lm::Minimizer.new("1110")
+min.shortest.to_s(verilog: "a") # => ~a[0] | ~a[1]
+min.canonical.to_s(:verilog)    # => ~x[0] & ~x[1] | ~x[0] & x[1] | x[0] & ~x[1]
 ```
 
 ## CLI
